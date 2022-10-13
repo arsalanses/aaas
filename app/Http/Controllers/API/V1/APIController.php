@@ -14,4 +14,13 @@ class ApiController extends Controller
             return response()->json('Azizam');
         }
     }
+
+    public function eshgham($name=null, $from=null)
+    {
+        if (($name != null || $name != '') && ($from != null || $from != '')) {
+            return response()->json("$name Eshghami. - $from");
+        } else {
+            return response()->json('Eshgham');
+        }
+    }
 }

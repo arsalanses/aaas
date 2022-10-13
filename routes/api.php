@@ -21,4 +21,5 @@ use App\Http\Controllers\API\V1\APIController;
 // });
 Route::group(['prefix'=>'v1'], function() {
     Route::get('azizam/{name?}/{from?}/', [APIController::class, 'azizam']);
+    Route::get('eshgham/{name?}/{from?}/', [APIController::class, 'eshgham']);
 });
