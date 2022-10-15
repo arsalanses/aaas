@@ -9,18 +9,18 @@ class ApiController extends Controller
     public function azizam($name=null, $from=null)
     {
         if (($name != null || $name != '') && ($from != null || $from != '')) {
-            return response()->json("$name Azizami. - $from");
+            return response()->json(["data" => "$name Azizami. - $from"]);
         } else {
-            return response()->json('Azizam');
+            return response()->json(["data" =>'Azizam']);
         }
     }
 
     public function eshgham($name=null, $from=null)
     {
         if (($name != null || $name != '') && ($from != null || $from != '')) {
-            return response()->json("$name Eshghami. - $from");
+            return response()->json(["data" => "$name Eshghami. - $from"]);
         } else {
-            return response()->json('Eshgham');
+            return response()->json(["data" => 'Eshgham']);
         }
     }
 }
