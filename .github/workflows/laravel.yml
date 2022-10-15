@@ -12,9 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Remove composer.lock
-      run: rm -f composer.lock
-
     - name: Remove vendor
       run: rm -rf /vendor/
 
