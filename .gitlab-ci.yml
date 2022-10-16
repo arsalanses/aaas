@@ -29,6 +29,9 @@ test:
 
 deploy:
   stage: deploy
+
+  only:
+    - master
   
   script:
   - ./deploy.sh
