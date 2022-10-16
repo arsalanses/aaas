@@ -35,19 +35,7 @@ deploy:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
 
-    # - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-
-    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-
-    # - ssh-keyscan 116.203.84.245 >> ~/.ssh/known_hosts
-    # - chmod 644 ~/.ssh/known_hosts
-
-    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-    - ssh arsalan@116.203.84.245 -p 1997
-  
   script:
-    - ls
+    - ssh -o StrictHostKeyChecking=no arsalan@116.203.84.245 -p 1997 -i $SSH_PRIVATE_KEY "
+      ls &&
+      echo 'gitlab runner' > .log"
