@@ -1,5 +1,9 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Laravel.gitlab-ci.yml
 
+stages:
+  - test
+  - deploy
+
 image: php:latest
 
 cache:
@@ -15,9 +19,31 @@ before_script:
   - php composer.phar install
 
 test:
+  stage: test
   
   only:
     - master
   
   script:
     - php vendor/bin/phpunit --coverage-text --colors=never
+
+deploy:
+  stage: deploy
+  
+  script:
+  - ./deploy.sh
+  
+  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+
+  - eval $(ssh-agent -s)
+
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+
+  - ssh-keyscan 116.203.84.245 >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+
+  - ssh arsalan@116.203.84.245 -p 1997
+  
