@@ -33,10 +33,18 @@ deploy:
   
   before_script:
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    # - eval $(ssh-agent -s)
-    - chmod 400 $SSH_PRIVATE_KEY
+
+    - eval $(ssh-agent -s)
+
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+
+    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config'
 
   script:
-    - ssh -o StrictHostKeyChecking=no arsalan@116.203.84.245 -p 1997 -i $SSH_PRIVATE_KEY "
+    - ssh -p 1997 -i ~/.ssh/id_rsa arsalan@116.203.84.245 "
       ls &&
       echo 'gitlab runner' > .log"
