@@ -34,7 +34,7 @@ deploy:
     - master
   
   script:
-  - ./deploy.sh
+  # - ./deploy.sh
   
   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
 
