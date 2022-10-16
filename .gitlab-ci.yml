@@ -31,20 +31,22 @@ deploy:
   only:
     - master
   
-  script:
-  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
 
-  - eval $(ssh-agent -s)
+    # - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
 
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
 
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
+    - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
 
-  - ssh-keyscan 116.203.84.245 >> ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
+    # - ssh-keyscan 116.203.84.245 >> ~/.ssh/known_hosts
+    # - chmod 644 ~/.ssh/known_hosts
 
-  - cat ~/.ssh/known_hosts
-
-  - ssh arsalan@116.203.84.245 -p 1997
+    - ssh arsalan@116.203.84.245 -p 1997 -i ~/.ssh/id_rsa
   
+  script:
+    - ls
