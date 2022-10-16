@@ -14,5 +14,10 @@ before_script:
   - php composer.phar install
 
 test:
+  
+  only:
+    refs:
+      - master
+  
   script:
     - php vendor/bin/phpunit --coverage-text --colors=never
