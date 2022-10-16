@@ -46,7 +46,7 @@ deploy:
     # - ssh-keyscan 116.203.84.245 >> ~/.ssh/known_hosts
     # - chmod 644 ~/.ssh/known_hosts
 
-    - ssh arsalan@116.203.84.245 -p 1997 -i ~/.ssh/id_rsa
+    - ssh arsalan@116.203.84.245 -p 1997
   
   script:
     - ls
